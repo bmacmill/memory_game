@@ -5,7 +5,6 @@ import MemoryCard from '../components/MemoryCard';
 
 
 
-
 export default function App() {
     const [isGameOn, setIsGameOn] = useState(false)
     const [emojisData, setEmojisData] = useState([])
@@ -18,21 +17,49 @@ export default function App() {
               throw new Error("Api is not working")
             }
             const data = await response.json()
-            const dataSample = data.slice(0, 5)
+            // const rand = Math.floor(Math.random() * 102)  
+            
+            
+            //const dataSample = data.slice(0, 5)
             console.log(data)
+
             setIsGameOn(true)
-            console.log(dataSample)
-            setEmojisData(dataSample)
+           // console.log(dataSample)
+            //findImage(data)
+            setEmojisData(getRandomImages(data))
             
         } catch(err){
           console.error(err)
         }
-       
-        
-
         
     }
 
+
+    function getRandomIndices(array){
+        const emojisArray = []
+       
+        for(let i = 0; i < 5; i++){
+            const rand = Math.floor(Math.random() * array.length) 
+            if(!emojisArray.includes(rand)){
+                emojisArray.push(rand)
+            } else {
+                i--
+            }
+        }
+        return emojisArray
+    }
+
+    function getRandomImages(array){
+       
+        const arr = getRandomIndices(array)
+        const newDataArray = []
+    
+        arr.forEach(el=>{
+            newDataArray.push(array[el])
+        })
+      
+        return newDataArray 
+    }
     
     function turnCard() {
         console.log("Memory card clicked")
@@ -42,7 +69,7 @@ export default function App() {
         <main>
             <h1>Memory</h1>
             {!isGameOn && <Form handleSubmit={startGame} />}
-            {isGameOn && <MemoryCard handleClick={turnCard} />}
+            {isGameOn && <MemoryCard handleClick={turnCard} emojisData={emojisData}/>}
         </main>
     )
 }
