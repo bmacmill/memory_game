@@ -8,6 +8,7 @@ import MemoryCard from '../components/MemoryCard';
 
 export default function App() {
     const [isGameOn, setIsGameOn] = useState(false)
+    const [emojisData, setEmojisData] = useState([])
     
     async function startGame(e) {
         e.preventDefault()
@@ -16,9 +17,12 @@ export default function App() {
             if(!response.ok){
               throw new Error("Api is not working")
             }
-            const data = response.json()
+            const data = await response.json()
+            const dataSample = data.slice(0, 5)
             console.log(data)
             setIsGameOn(true)
+            console.log(dataSample)
+            setEmojisData(dataSample)
             
         } catch(err){
           console.error(err)
