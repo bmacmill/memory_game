@@ -21,12 +21,15 @@ export default function App() {
             
             
             //const dataSample = data.slice(0, 5)
-            console.log(data)
+            // console.log(data)
 
             setIsGameOn(true)
-           // console.log(dataSample)
-            //findImage(data)
-            setEmojisData(getRandomImages(data))
+          // console.log(dataSample)
+           const randomIndices = getRandomCards(data)
+           console.log("rando", randomIndices)
+           const shuffledArray = shuffle(randomIndices)
+          console.log(shuffledArray)
+            setEmojisData(shuffledArray)
             
         } catch(err){
           console.error(err)
@@ -49,7 +52,7 @@ export default function App() {
         return emojisArray
     }
 
-    function getRandomImages(array){
+    function getRandomCards(array){
        
         const arr = getRandomIndices(array)
         const newDataArray = []
@@ -60,9 +63,26 @@ export default function App() {
       
         return newDataArray 
     }
+       // fischer yates shuffle... straight copy paste
+    function shuffle(arr) {
+        const doubledData = [...arr, ...arr]
+        let i = doubledData.length, j, temp;
+        while(--i > 0){
+            j = Math.floor(Math.random()*(i+1));
+            temp = doubledData[j];
+            doubledData[j] = doubledData[i];
+            doubledData[i] = temp;
+        }
+        return doubledData
+    }
+
     
-    function turnCard() {
-        console.log("Memory card clicked")
+    //const sortedArr = shuffle(emojisData)
+
+
+    function turnCard(name, index, category) {
+                console.log(`The emoji ${name} at index ${index} was clicked!`)
+        //console.log("Memory card clicked", e.target.textContent)
     }
     
     return (
