@@ -8,7 +8,8 @@ import MemoryCard from '../components/MemoryCard';
 export default function App() {
     const [isGameOn, setIsGameOn] = useState(false)
     const [emojisData, setEmojisData] = useState([])
-    
+    const [selectedCards, setSelectedCards] = useState([])
+    console.log(selectedCards)
     async function startGame(e) {
         e.preventDefault()
         try {
@@ -80,9 +81,19 @@ export default function App() {
     //const sortedArr = shuffle(emojisData)
 
 
-    function turnCard(name, index, category) {
-                console.log(`The emoji ${name} at index ${index} was clicked!`)
+    function turnCard(name, index) {
+        const clickedCard = [{name, index}]
+        //console.log(`The emoji ${name} at index ${index} was clicked!`)
         //console.log("Memory card clicked", e.target.textContent)
+        if(selectedCards.length === 0){
+            setSelectedCards(clickedCard)
+        } else if(selectedCards.some((card)=> card.index != index) && selectedCards.length === 1){
+            setSelectedCards(prevCard => [...prevCard, clickedCard])
+        } else  {
+            return
+        }
+        
+      
     }
     
     return (
