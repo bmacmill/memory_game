@@ -85,13 +85,24 @@ export default function App() {
         //console.log("cc", clickedCard)
         //console.log(`The emoji ${name} at index ${index} was clicked!`)
         //console.log("Memory card clicked", e.target.textContent)
-        if(!clickedCard && selectedCards.length < 2){
-             setSelectedCards(prevCard => [...prevCard, {clickedCard}])
+        // if(!clickedCard && selectedCards.length < 2){
+        //      setSelectedCards(prevCard => [...prevCard, {clickedCard}])
+        //     //setSelectedCards(clickedCard)
+            
+        // } else if(!clickedCard && selectedCards.length === 2){
+
+        //     setSelectedCards({clickedCard})
+             
+        // } 
+
+        if(selectedCards.length === 0 || selectedCards.length === 2){
+                setSelectedCards({clickedCard})
+             
             //setSelectedCards(clickedCard)
             
-        } else if(!clickedCard && selectedCards.length === 2){
-
-            setSelectedCards({clickedCard})
+        } else if(!clickedCard && selectedCards.length === 1){
+            setSelectedCards(prevCard => [...prevCard, {clickedCard}])
+            //setSelectedCards({clickedCard})
              
         } 
     
