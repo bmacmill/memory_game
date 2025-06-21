@@ -9,7 +9,7 @@ export default function App() {
     const [isGameOn, setIsGameOn] = useState(false)
     const [emojisData, setEmojisData] = useState([])
     const [selectedCards, setSelectedCards] = useState([])
-    console.log(selectedCards)
+   // console.log(selectedCards)
     async function startGame(e) {
         e.preventDefault()
         try {
@@ -77,25 +77,34 @@ export default function App() {
         return doubledData
     }
 
-    
-    //const sortedArr = shuffle(emojisData)
 
+    console.log(selectedCards)
 
     function turnCard(name, index) {
-        const clickedCard = [{name, index}]
+        const clickedCard = selectedCards.find((emoji) => emoji.index === index)
+        //console.log("cc", clickedCard)
         //console.log(`The emoji ${name} at index ${index} was clicked!`)
         //console.log("Memory card clicked", e.target.textContent)
-        if(selectedCards.length === 0){
-            setSelectedCards(clickedCard)
-        } else if(selectedCards.some((card)=> card.index != index) && selectedCards.length === 1){
-            setSelectedCards(prevCard => [...prevCard, clickedCard])
-        } else  {
-            return
-        }
-        
-      
-    }
+        if(!clickedCard && selectedCards.length < 2){
+             setSelectedCards(prevCard => [...prevCard, {clickedCard}])
+            //setSelectedCards(clickedCard)
+            
+        } else if(!clickedCard && selectedCards.length === 2){
+
+            setSelectedCards({clickedCard})
+             
+        } 
     
+    }
+        function turnCard(name, index) {
+        const selectedCardEntry = selectedCards.find(emoji => emoji.index === index)
+        
+        if (!selectedCardEntry && selectedCards.length < 2) {
+            setSelectedCards(prevSelectedCards => [...prevSelectedCards, { name, index }])
+        } else if (!selectedCardEntry && selectedCards.length === 2) {
+            setSelectedCards([{ name, index }])
+        }
+    }
     return (
         <main>
             <h1>Memory</h1>
